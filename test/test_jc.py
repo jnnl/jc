@@ -121,7 +121,7 @@ class FunctionTest(unittest.TestCase):
         self.assertAlmostEqual(r[0], 4.6415888)
 
         # complex numbers are currently not supported
-        with self.assertRaises(TypeError):
+        with self.assertRaises((TypeError, ValueError)):
             r = self.e.evaluate('cbrt(-1)')
 
     def test_nrt(self):

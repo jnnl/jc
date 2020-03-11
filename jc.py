@@ -7,7 +7,7 @@ A simple arithmetic calculator in the vein of bc.
 Usage: jc.py [expression[; ...]]
 
 TODO:
-    - allow arbitrary output base
+    - support arbitrary output base
     - support floats in non-decimal bases
     - support complex numbers
 '''
@@ -314,7 +314,11 @@ class Evaluator(object):
         if base == 2:
             return int(bin(int(result))[2:])
         elif base == 8:
-            return int(oct(int(result))[2:])
+            if sys.version_info >= (3, 0, 0):
+                return int(oct(int(result))[2:])
+            else:
+                if result == 0: return int(oct(int(result)))
+                else: return int(oct(int(result))[1:])
         elif base == 10:
             if result - int(result) == 0:
                 return int(result)
