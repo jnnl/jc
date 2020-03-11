@@ -55,7 +55,7 @@ class Completer(object):
             readline.read_history_file(history_file)
             readline.set_history_length(history_len)
             retval = True
-        except FileNotFoundError:
+        except IOError:
             retval = False
 
         atexit.register(readline.write_history_file, history_file)
