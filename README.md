@@ -1,4 +1,7 @@
 # jc
+
+![tests](https://github.com/jnnl/jc/workflows/jc/badge.svg)
+
 A simple and straightforward CLI calculator built on top of Python's [AST](https://docs.python.org/3.8/library/ast.html).
 
 Features standard arithmetic and binary calculations,
