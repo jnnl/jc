@@ -8,6 +8,7 @@ Usage: jc.py [expression[; ...]]
 
 TODO:
     - allow arbitrary output base
+    - support floats in non-decimal bases
     - support complex numbers
 '''
 
@@ -136,7 +137,7 @@ class Evaluator(object):
                       'help': 'atan(x): inverse trigonometric tangent of x (in radians)'},
             'atanh': {'value': math.atanh,
                       'help': 'atanh(x): inverse hyperbolic tangent of x (in radians)'},
-            'base': {'value': lambda x: self._set_base(x),
+            'base': {'value': lambda x=None: self._set_base(x),
                       'help': 'base(x): set output base to x (2, 8, 10 or 16 allowed)'},
             'cbrt':  {'value': lambda x: x ** (1. / 3),
                       'help': 'cbrt(x): cube root of x'},
@@ -209,6 +210,9 @@ class Evaluator(object):
                 raise ValueError('unknown help topic \'%s\'' % arg.id)
 
     def _set_base(self, base):
+        if base is None:
+            print(self.internal_variables['_base'])
+            return
         if base not in (2, 8, 10, 16):
             raise ValueError('unsupported base \'%s\' (allowed: 2, 8, 10, 16)' % base)
         self.internal_variables['_base'] = base
@@ -308,9 +312,9 @@ class Evaluator(object):
         ''' Convert output result to defined base. '''
         base = self.internal_variables['_base']
         if base == 2:
-            return bin(result)[2:]
+            return int(bin(int(result))[2:])
         elif base == 8:
-            return oct(result)[2:]
+            return int(oct(int(result))[2:])
         elif base == 10:
             if result - int(result) == 0:
                 return int(result)
@@ -319,7 +323,7 @@ class Evaluator(object):
         elif base == 16:
             return hex(result)[2:]
         else:
-            raise ValueError('invalid base value \'%s\'' % base)
+            raise ValueError('unsupported base value \'%s\'' % base)
 
     def _eval_expr(self, expr):
         ''' Evaluate a single expression. '''

@@ -2,6 +2,7 @@ import unittest
 
 import jc
 
+
 class ArithmeticTest(unittest.TestCase):
 
     def setUp(self):
@@ -184,10 +185,10 @@ class BaseTest(unittest.TestCase):
 
     def test_output_base(self):
         r = self.e.evaluate('base(2); 10')
-        self.assertEqual(r, ['1010'])
+        self.assertEqual(r, [1010])
 
         r = self.e.evaluate('base(8); 10')
-        self.assertEqual(r, ['12'])
+        self.assertEqual(r, [12])
 
         r = self.e.evaluate('base(10); 10')
         self.assertEqual(r, [10])
@@ -197,16 +198,16 @@ class BaseTest(unittest.TestCase):
 
     def test_multi_base(self):
         r = self.e.evaluate('base(2); 10; base(8); 10; base(10); 10; base(16); 10')
-        self.assertEqual(r, ['1010', '12', 10, 'a'])
+        self.assertEqual(r, [1010, 12, 10, 'a'])
 
         r = self.e.evaluate('base(2); 0; base(8); 0; base(10); 0; base(16); 0')
-        self.assertEqual(r, ['0', '0', 0, '0'])
+        self.assertEqual(r, [0, 0, 0, '0'])
 
         r = self.e.evaluate('base(2); 10; base(10); base(2); 15')
-        self.assertEqual(r, ['1010', '1111'])
+        self.assertEqual(r, [1010, 1111])
 
 
-class MiscTest(unittest.TestCase):
+class MiscellaneousTest(unittest.TestCase):
     def setUp(self):
         self.e = jc.Evaluator()
 
@@ -219,3 +220,16 @@ class MiscTest(unittest.TestCase):
 
         r = self.e.evaluate('ans; ans/100; (ans*20)/(ans*10); ans-ans')
         self.assertEqual(r, [100, 1, 2, 0])
+
+        r = self.e.evaluate('ans; ans + 10.51; round(ans)')
+        self.assertEqual(r, [0, 10.51, 11])
+
+    def test_implicit_ans(self):
+        r = self.e.evaluate('1; / 2')
+        self.assertEqual(r, [1, 0.5])
+
+        r = self.e.evaluate('* 10 + 50')
+        self.assertEqual(r, [55])
+
+        r = self.e.evaluate('/ 100; * 5 + 0.25')
+        self.assertEqual(r, [0.55, 3])
