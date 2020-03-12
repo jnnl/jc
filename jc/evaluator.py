@@ -21,6 +21,7 @@ import re
 import sys
 
 from . import completer
+from . import __version__
 
 
 class NamespaceError(Exception):
@@ -60,7 +61,7 @@ class Evaluator(object):
 
         self.internal_variables = {
             '_base': base,
-            '_version': '0.9'
+            '_version': __version__
         }
 
         self.variables = {}
