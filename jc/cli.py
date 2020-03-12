@@ -19,7 +19,7 @@ debug = os.environ.get('JC_DEBUG', False) == '1'
 def single_calc(e):
     # single calculation mode
     try:
-        results = e.evaluate(''.join(sys.argv[1:]))
+        results = e.eval(''.join(sys.argv[1:]))
         for result in results:
             print(result)
     except Exception as error:
@@ -35,7 +35,7 @@ def interactive_calc(e):
             while expr.rstrip().endswith('\\'):
                 expr = ''.join(expr.rsplit('\\')[:1]).rstrip()
                 expr += input('>> ')
-            results = e.evaluate(expr)
+            results = e.eval(expr)
             for result in results:
                 print(result)
         except (KeyboardInterrupt, EOFError):
@@ -49,7 +49,7 @@ def piped_calc(e):
     # piped mode
     try:
         expr = ';'.join(sys.stdin.readlines())
-        results = e.evaluate(expr)
+        results = e.eval(expr)
         for result in results:
             print(result)
     except (KeyboardInterrupt, EOFError):

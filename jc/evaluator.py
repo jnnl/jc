@@ -33,7 +33,7 @@ class Evaluator(object):
     Expression evaluator.
     Constructs ASTs from expressions and evaluates them.
 
-    Supports standard arithmetic and binary calculations,
+    Supports standard arithmetic and bitwise operations,
     variable assignments, basic functions, constants and base conversions.
     '''
 
@@ -302,7 +302,7 @@ class Evaluator(object):
 
         return result
 
-    def evaluate(self, expr, results=None):
+    def eval(self, expr, results=None):
         ''' Build and evaluate the AST for an expression, return the result(s). '''
         if results is None:
             results = []
@@ -332,6 +332,6 @@ class Evaluator(object):
                 results.append(result)
 
         if multi_expr:
-            self.evaluate(rest, results)
+            self.eval(rest, results)
 
         return results
