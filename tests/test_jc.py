@@ -235,5 +235,48 @@ class MiscellaneousTest(unittest.TestCase):
         self.assertEqual(r, [0.55, 3])
 
 
+class BitwiseTest(unittest.TestCase):
+
+    def setUp(self):
+        self.e = jc.Evaluator()
+
+    def test_and(self):
+        r = self.e.eval('0b1011 & 0b1101')
+        self.assertEqual(r, [9])
+        r = self.e.eval('11 & 12')
+        self.assertEqual(r, [8])
+
+    def test_or(self):
+        r = self.e.eval('0b1011 | 0b1101')
+        self.assertEqual(r, [15])
+        r = self.e.eval('3 | 8')
+        self.assertEqual(r, [11])
+
+    def test_xor(self):
+        r = self.e.eval('0b1011 ^ 0b1101')
+        self.assertEqual(r, [6])
+        r = self.e.eval('3 ^ 8')
+        self.assertEqual(r, [11])
+
+    def test_inv(self):
+        r = self.e.eval('~ 0b1011')
+        self.assertEqual(r, [-12])
+        r = self.e.eval('2 + ~-3')
+        self.assertEqual(r, [4])
+
+    def test_lshift(self):
+        r = self.e.eval('1 << 10')
+        self.assertEqual(r, [1024])
+        r = self.e.eval('3 << 8')
+        self.assertEqual(r, [768])
+
+    def test_rshift(self):
+        r = self.e.eval('2 >> 1')
+        self.assertEqual(r, [1])
+        r = self.e.eval('1024 >> 4')
+        self.assertEqual(r, [64])
+        r = self.e.eval('8 >> 8')
+        self.assertEqual(r, [0])
+
 if __name__ == '__main__':
     unittest.main()

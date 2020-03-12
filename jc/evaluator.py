@@ -51,6 +51,7 @@ class Evaluator(object):
             ast.BitAnd:   {'op': operator.iand,     'symbol': '&'},
             ast.BitOr:    {'op': operator.ior,      'symbol': '|'},
             ast.BitXor:   {'op': operator.ixor,     'symbol': '^'},
+            ast.Invert:   {'op': operator.inv,      'symbol': '~'},
             ast.LShift:   {'op': operator.lshift,   'symbol': '>>'},
             ast.RShift:   {'op': operator.rshift,   'symbol': '<<'},
             ast.UAdd:     {'op': operator.pos,      'symbol': '+'},
