@@ -233,3 +233,7 @@ class MiscellaneousTest(unittest.TestCase):
 
         r = self.e.evaluate('/ 100; * 5 + 0.25')
         self.assertEqual(r, [0.55, 3])
+
+
+if __name__ == '__main__':
+    unittest.main()

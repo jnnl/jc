@@ -14,59 +14,17 @@ TODO:
 
 from __future__ import print_function
 
-import atexit
 import ast
 import math
 import operator
-import os
 import re
-import readline
 import sys
-import traceback
+
+from . import completer
 
 
 class NamespaceError(Exception):
     pass
-
-
-class Completer(object):
-    '''
-    Readline completer.
-
-    Provides readline bindings, tab-completion and history for calculations.
-    '''
-
-    def __init__(self, content=[], history=True,
-                 history_file=os.path.expanduser("~/.jc_history"),
-                 history_len=1000):
-
-        self.content = content
-        readline.parse_and_bind('tab: complete')
-        readline.set_completer(self._init_completer())
-
-        if history:
-            self.history_file = history_file
-            self.history_length = history_len
-            self._init_history(self.history_file, self.history_length)
-
-    def _init_history(self, history_file, history_len):
-        ''' Initialize the history file. '''
-        try:
-            readline.read_history_file(history_file)
-            readline.set_history_length(history_len)
-            retval = True
-        except IOError:
-            retval = False
-
-        atexit.register(readline.write_history_file, history_file)
-        return retval
-
-    def _init_completer(self):
-        ''' Initialize a completion provider function. '''
-        def completer(text, state):
-            results = [i for i in self.content if i.startswith(text)] + [None]
-            return results[state]
-        return completer
 
 
 class Evaluator(object):
@@ -78,7 +36,7 @@ class Evaluator(object):
     variable assignments, basic functions, constants and base conversions.
     '''
 
-    def __init__(self, base=10, completer=Completer):
+    def __init__(self, base=10, completer=completer.Completer):
         self.ans = None
 
         self.operators = {
@@ -376,67 +334,3 @@ class Evaluator(object):
             self.evaluate(rest, results)
 
         return results
-
-
-def single_calc(e):
-    # single calculation mode
-    try:
-        results = e.evaluate(''.join(sys.argv[1:]))
-        for result in results:
-            print(result)
-    except Exception as error:
-        print('ERROR: %s' % error, file=sys.stderr)
-        if debug: traceback.print_exc()
-        sys.exit(1)
-
-def interactive_calc(e):
-    # interactive mode
-    while True:
-        try:
-            expr = input('> ')
-            while expr.rstrip().endswith('\\'):
-                expr = ''.join(expr.rsplit('\\')[:1]).rstrip()
-                expr += input('>> ')
-            results = e.evaluate(expr)
-            for result in results:
-                print(result)
-        except (KeyboardInterrupt, EOFError):
-            print()
-            sys.exit()
-        except Exception as error:
-            print('ERROR: %s' % error, file=sys.stderr)
-            if debug: traceback.print_exc()
-
-def piped_calc(e):
-    # piped mode
-    try:
-        expr = ';'.join(sys.stdin.readlines())
-        results = e.evaluate(expr)
-        for result in results:
-            print(result)
-    except (KeyboardInterrupt, EOFError):
-        print()
-        sys.exit(0)
-    except Exception as error:
-        print('ERROR: %s' % error, file=sys.stderr)
-        if debug: traceback.print_exc()
-        sys.exit(1)
-
-
-if __name__ == '__main__':
-    try:
-        # this is the only python2/3 incompatibility,
-        # so no need to use six/2to3/builtins
-        input = raw_input
-    except NameError:
-        pass
-
-    e = Evaluator()
-    debug = os.environ.get('JC_DEBUG', False) == '1'
-
-    if len(sys.argv) > 1:
-        single_calc(e)
-    elif sys.stdin.isatty():
-        interactive_calc(e)
-    else:
-        piped_calc(e)

@@ -9,6 +9,8 @@ variables, functions, constants, base conversion, readline bindings, tab-complet
 
 No external dependencies. Supports both Python 2 and 3.
 
-Usage: `python jc.py [expression[; ...]]`
+Install: `pip install .`
 
-Help: `python jc.py 'help()'`
+Usage: `jc [expression[; ...]]`
+
+Help: `jc 'help()'`
