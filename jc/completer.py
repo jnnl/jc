@@ -19,21 +19,13 @@ class Completer(object):
         readline.set_completer(self._init_completer())
 
         if history:
-            self.history_file = history_file
-            self.history_length = history_len
-            self._init_history(self.history_file, self.history_length)
+            self._init_history(history_file, history_len)
 
     def _init_history(self, history_file, history_len):
         ''' Initialize the history file. '''
-        try:
-            readline.read_history_file(history_file)
-            readline.set_history_length(history_len)
-            retval = True
-        except IOError:
-            retval = False
-
+        readline.read_history_file(history_file)
+        readline.set_history_length(history_len)
         atexit.register(readline.write_history_file, history_file)
-        return retval
 
     def _init_completer(self):
         ''' Initialize a completion provider function. '''

@@ -97,7 +97,7 @@ class Evaluator(object):
                       'help': 'atan(x): inverse trigonometric tangent of x (in radians)'},
             'atanh': {'value': math.atanh,
                       'help': 'atanh(x): inverse hyperbolic tangent of x (in radians)'},
-            'base': {'value': lambda x=None: self._set_base(x),
+            'base':  {'value': lambda x=None: self._set_base(x),
                       'help': 'base(x): set output base to x (2, 8, 10 or 16 allowed)'},
             'cbrt':  {'value': lambda x: x ** (1. / 3),
                       'help': 'cbrt(x): cube root of x'},
@@ -164,10 +164,9 @@ class Evaluator(object):
 
         for arg in args:
             msg = self.constants.get(arg.id, self.functions.get(arg.id, {})).get('help')
-            if msg:
-                print(msg)
-            else:
+            if not msg:
                 raise ValueError('unknown help topic \'%s\'' % arg.id)
+            print(msg)
 
     def _set_base(self, base):
         if base is None:
