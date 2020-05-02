@@ -5,7 +5,7 @@ import jc
 
 class EvalTestCase(unittest.TestCase):
     def setUp(self):
-        self.e = jc.Evaluator()
+        self.e = jc.Evaluator(completer=None)
 
 
 class ArithmeticTest(EvalTestCase):
