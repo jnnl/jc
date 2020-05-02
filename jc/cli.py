@@ -6,12 +6,8 @@ import traceback
 
 import jc
 
-try:
-    # this is the only python2/3 incompatibility,
-    # so no need to use six/2to3/builtins
-    input = raw_input
-except NameError:
-    pass
+if sys.version_info < (3, 0, 0):
+    exec('input = raw_input')
 
 debug = os.environ.get('JC_DEBUG', False) == '1'
 

@@ -62,6 +62,7 @@ class Evaluator(object):
 
         self.internal_variables = {
             '_base': base,
+            '_python': 'Python ' + sys.version,
             '_version': __version__
         }
 
@@ -202,7 +203,7 @@ class Evaluator(object):
         if operator.id in self.constants:
             return self.constants[operator.id]['value']
         elif operator.id in self.internal_variables:
-            return self.internal_variables[operator.id]
+            print(self.internal_variables[operator.id])
         elif operator.id in self.variables:
             return self.variables[operator.id]
         elif operator.id == 'ans':
