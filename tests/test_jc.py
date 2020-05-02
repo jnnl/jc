@@ -65,6 +65,14 @@ class AssignmentTest(unittest.TestCase):
         self.assertEqual(r, [])
         r = self.e.eval('a')
         self.assertEqual(r, [0])
+        r = self.e.eval('a_var = 1.5')
+        self.assertEqual(r, [])
+        r = self.e.eval('a_var')
+        self.assertEqual(r, [1.5])
+        r = self.e.eval('a_var2 = 2')
+        self.assertEqual(r, [])
+        r = self.e.eval('a_var2')
+        self.assertEqual(r, [2])
 
     def test_reassign(self):
         r = self.e.eval('a = 0')
@@ -73,6 +81,30 @@ class AssignmentTest(unittest.TestCase):
         self.assertEqual(r, [])
         r = self.e.eval('a')
         self.assertEqual(r, [1])
+
+    def test_const_assign_err(self):
+        with self.assertRaises(jc.NamespaceError):
+            r = self.e.eval('pi = 3.14')
+
+    def test_int_assign_err(self):
+        with self.assertRaises(jc.NamespaceError):
+            r = self.e.eval('_version = 1.1')
+
+    def test_int_space_assign_err(self):
+        with self.assertRaises(jc.NamespaceError):
+            r = self.e.eval('_dummy = 0')
+
+    def test_ans_assign_err(self):
+        with self.assertRaises(jc.NamespaceError):
+            r = self.e.eval('ans = 0')
+
+    def test_func_assign_err(self):
+        with self.assertRaises(jc.NamespaceError):
+            r = self.e.eval('sqrt = 0')
+
+    def test_num_assign_err(self):
+        with self.assertRaises(TypeError):
+            r = self.e.eval('1 = 0')
 
 
 class MultiExprTest(unittest.TestCase):
@@ -207,7 +239,7 @@ class BaseTest(unittest.TestCase):
         self.assertEqual(r, [1010, 1111])
 
 
-class MiscellaneousTest(unittest.TestCase):
+class AnsTest(unittest.TestCase):
     def setUp(self):
         self.e = jc.Evaluator()
 
