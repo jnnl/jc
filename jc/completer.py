@@ -21,6 +21,9 @@ class Completer(object):
         if history:
             self._init_history(history_file, history_len)
 
+    def add_content(self, content):
+        self.content.append(content)
+
     def _init_history(self, history_file, history_len):
         ''' Initialize the history file. '''
         readline.read_history_file(history_file)

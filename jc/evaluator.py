@@ -145,12 +145,14 @@ class Evaluator(object):
                       'help': 'tan(x): tangent of x'},
         }
 
-        self.completer = completer(
-            list([k + '(' for k in self.functions.keys()]) +
-            list(self.constants.keys()) +
-            list(self.variables.keys()) +
-            ['ans']
-        )
+        self.completer = None
+        if completer is not None:
+            self.completer = completer(
+                list([k + '(' for k in self.functions.keys()]) +
+                list(self.constants.keys()) +
+                list(self.variables.keys()) +
+                ['ans']
+            )
 
     def _help(self, args):
         ''' Print help for given topics. '''
@@ -263,7 +265,8 @@ class Evaluator(object):
         tree = ast.parse(expr_value, mode='eval')
         value = self._eval_op(tree.body)
         self.variables[var_name] = value
-        self.completer.content.append(var_name)
+        if self.completer is not None:
+            self.completer.add_content(var_name)
 
         return value
 
