@@ -3,10 +3,12 @@ import unittest
 import jc
 
 
-class ArithmeticTest(unittest.TestCase):
-
+class EvalTestCase(unittest.TestCase):
     def setUp(self):
         self.e = jc.Evaluator()
+
+
+class ArithmeticTest(EvalTestCase):
 
     def test_addition(self):
         r = self.e.eval('1 + 2')
@@ -55,10 +57,7 @@ class ArithmeticTest(unittest.TestCase):
         self.assertEqual(r, [20])
 
 
-class AssignmentTest(unittest.TestCase):
-
-    def setUp(self):
-        self.e = jc.Evaluator()
+class AssignmentTest(EvalTestCase):
 
     def test_assign(self):
         r = self.e.eval('a = 0')
@@ -107,10 +106,7 @@ class AssignmentTest(unittest.TestCase):
             r = self.e.eval('1 = 0')
 
 
-class MultiExprTest(unittest.TestCase):
-
-    def setUp(self):
-        self.e = jc.Evaluator()
+class MultiExprTest(EvalTestCase):
 
     def test_multi_assign(self):
         r = self.e.eval('a = 1; b= 2; c =3; d=4')
@@ -129,10 +125,7 @@ class MultiExprTest(unittest.TestCase):
         self.assertEqual(r, [256, 16])
 
 
-class FunctionTest(unittest.TestCase):
-
-    def setUp(self):
-        self.e = jc.Evaluator()
+class FunctionTest(EvalTestCase):
 
     def test_sqrt(self):
         r = self.e.eval('sqrt(16)')
@@ -200,10 +193,7 @@ class FunctionTest(unittest.TestCase):
             r = self.e.eval('ln(0)')
 
 
-class BaseTest(unittest.TestCase):
-
-    def setUp(self):
-        self.e = jc.Evaluator()
+class BaseTest(EvalTestCase):
 
     def test_input_base(self):
         r = self.e.eval('0b1111')
@@ -239,9 +229,7 @@ class BaseTest(unittest.TestCase):
         self.assertEqual(r, [1010, 1111])
 
 
-class AnsTest(unittest.TestCase):
-    def setUp(self):
-        self.e = jc.Evaluator()
+class AnsTest(EvalTestCase):
 
     def test_ans(self):
         r = self.e.eval('ans')
@@ -267,10 +255,7 @@ class AnsTest(unittest.TestCase):
         self.assertEqual(r, [0.55, 3])
 
 
-class BitwiseTest(unittest.TestCase):
-
-    def setUp(self):
-        self.e = jc.Evaluator()
+class BitwiseTest(EvalTestCase):
 
     def test_and(self):
         r = self.e.eval('0b1011 & 0b1101')
@@ -309,6 +294,7 @@ class BitwiseTest(unittest.TestCase):
         self.assertEqual(r, [64])
         r = self.e.eval('8 >> 8')
         self.assertEqual(r, [0])
+
 
 if __name__ == '__main__':
     unittest.main()
