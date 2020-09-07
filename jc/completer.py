@@ -1,6 +1,7 @@
 import atexit
 import os
 import readline
+import sys
 
 
 class Completer(object):
@@ -19,7 +20,14 @@ class Completer(object):
         readline.set_completer(self._init_completer())
 
         if history:
-            self._init_history(history_file, history_len)
+            try:
+                open(history_file, 'a').close()
+            except (IOError, OSError):
+                sys.stderr.write(
+                    'warning: failed to open history file {}, history will not be saved\n'
+                    .format(history_file))
+            else:
+                self._init_history(history_file, history_len)
 
     def add_content(self, content):
         self.content.append(content)
