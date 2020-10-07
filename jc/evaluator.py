@@ -280,8 +280,10 @@ class Evaluator(object):
             if sys.version_info >= (3, 0, 0):
                 return int(oct(int(result))[2:])
             else:
-                if result == 0: return int(oct(int(result)))
-                else: return int(oct(int(result))[1:])
+                if result == 0:
+                    return int(oct(int(result)))
+                else:
+                    return int(oct(int(result))[1:])
         elif base == 10:
             if result - int(result) == 0:
                 return int(result)
@@ -315,17 +317,13 @@ class Evaluator(object):
 
         multi_expr = ';' in expr
         if multi_expr:
-            exprs = expr.split(';')
-            expr = exprs[0]
-            rest = ';'.join(exprs[1:])
+            expr, _, rest = expr.partition(';')
 
-        if not len(expr):
-            return results
-        elif expr.startswith('#'):
+        if expr.startswith('#') or len(expr) == 0:
             return results
 
         var_assign = re.search(r'(?P<var>^\w+\s*)\=(?P<val>\s*(.*?)$)', expr)
-        if var_assign:
+        if var_assign is not None:
             var_assign = var_assign.groupdict()
             var_name = var_assign['var'].strip()
             var_value = var_assign['val'].strip()
