@@ -69,14 +69,16 @@ class Evaluator(object):
         self.variables = {}
 
         self.constants = {
-            'e':   {'value': math.e,
-                    'help': 'e: Euler\'s number / Napier\'s constant'},
-            'pi':  {'value': math.pi,
-                    'help': 'pi: 0.5 tau'},
-            'phi': {'value': (1 + math.sqrt(5)) / 2,
-                    'help': 'phi: the golden ratio'},
-            'tau': {'value': math.pi * 2,
-                    'help': 'tau: 2 pi'},
+            'e':        {'value': math.e,
+                         'help': 'e: Euler\'s number'},
+            'euler':    {'value': 0.577215664901533,
+                         'help': 'euler: Euler-Mascheroni constant'},
+            'pi':       {'value': math.pi,
+                         'help': 'pi: 0.5 tau'},
+            'phi':      {'value': (1 + math.sqrt(5)) / 2,
+                         'help': 'phi: the golden ratio'},
+            'tau':      {'value': math.pi * 2,
+                         'help': 'tau: 2 pi'},
         }
 
         self.functions = {
