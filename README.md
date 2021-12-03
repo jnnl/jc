@@ -14,3 +14,10 @@ Install: `python3 -m pip install --user git+https://github.com/jnnl/jc`
 Usage: `jc [expression[; ...]]`
 
 Help: `jc 'help()'`
+
+
+## TODO
+
+- arbitrary output base
+- floats in non-decimal bases
+- complex numbers

@@ -5,11 +5,6 @@ jc.py
 
 A simple arithmetic calculator in the vein of bc.
 Usage: jc.py [expression[; ...]]
-
-TODO:
-    - support arbitrary output base
-    - support floats in non-decimal bases
-    - support complex numbers
 '''
 
 from __future__ import print_function
