@@ -11,6 +11,12 @@ if sys.version_info < (3, 0, 0):
 
 debug = os.environ.get('JC_DEBUG', False) == '1'
 
+def handle_error(error, exit_on_error=True):
+    print('ERROR: %s' % error, file=sys.stderr)
+    if debug:
+        traceback.print_exc()
+    if exit_on_error:
+        sys.exit(1)
 
 def single_calc(e):
     # single calculation mode
@@ -19,9 +25,7 @@ def single_calc(e):
         for result in results:
             print(result)
     except Exception as error:
-        print('ERROR: %s' % error, file=sys.stderr)
-        if debug: traceback.print_exc()
-        sys.exit(1)
+        handle_error(error)
 
 def interactive_calc(e):
     # interactive mode
@@ -38,8 +42,7 @@ def interactive_calc(e):
             print()
             sys.exit()
         except Exception as error:
-            print('ERROR: %s' % error, file=sys.stderr)
-            if debug: traceback.print_exc()
+            handle_error(error, exit_on_error=False)
 
 def piped_calc(e):
     # piped mode
@@ -52,9 +55,7 @@ def piped_calc(e):
         print()
         sys.exit(0)
     except Exception as error:
-        print('ERROR: %s' % error, file=sys.stderr)
-        if debug: traceback.print_exc()
-        sys.exit(1)
+        handle_error(error)
 
 def main():
     e = jc.Evaluator()

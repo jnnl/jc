@@ -2,7 +2,7 @@
 
 ![tests](https://github.com/jnnl/jc/workflows/jc/badge.svg)
 
-A simple and straightforward CLI calculator built on top of Python's [AST](https://docs.python.org/3.8/library/ast.html).
+A simple and straightforward CLI calculator using Python's [AST](https://docs.python.org/3.8/library/ast.html) module.
 
 Features standard arithmetic and bitwise operations,
 variables, functions, constants, base conversion, readline bindings, tab-completion, and calculation history.
