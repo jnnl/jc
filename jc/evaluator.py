@@ -77,70 +77,79 @@ class Evaluator(object):
         }
 
         self.functions = {
-            'A':     {'value': lambda m, n: n + 1 if m == 0 else \
-                     (self.functions['A']['value'](m - 1, 1) if m > 0 and n == 0 else \
-                     self.functions['A']['value'](m - 1, self.functions['A']['value'](m, n - 1))),
-                     'help': 'A(x, y): Ackermann function'},
-            'abs':   {'value': abs,
-                      'help': 'abs(x): absolute value of x'},
-            'acos':  {'value': math.acos,
-                      'help': 'acos(x): inverse trigonometric cosine of x (in radians)'},
-            'acosh': {'value': math.acosh,
-                      'help': 'acosh(x): inverse hyperbolic cosine of x (in radians)'},
-            'asin':  {'value': math.asin,
-                      'help': 'asin(x): inverse trigonometric sine of x (in radians)'},
-            'asinh': {'value': math.asinh,
-                      'help': 'asinh(x): inverse hyperbolic sine of x (in radians)'},
-            'atan':  {'value': math.atan,
-                      'help': 'atan(x): inverse trigonometric tangent of x (in radians)'},
-            'atanh': {'value': math.atanh,
-                      'help': 'atanh(x): inverse hyperbolic tangent of x (in radians)'},
-            'base':  {'value': lambda x=None: self._set_base(x),
-                      'help': 'base(x): set output base to x (2, 8, 10 or 16 allowed)'},
-            'cbrt':  {'value': lambda x: x ** (1. / 3),
-                      'help': 'cbrt(x): cube root of x'},
-            'ceil':  {'value': math.ceil,
-                      'help': 'ceil(x): ceiling function of x'},
-            'cos':   {'value': math.cos,
-                      'help': 'cos(x): cosine of x (in radians)'},
-            'deg':   {'value': math.degrees,
+            'A':      {'value': lambda m, n: n + 1 if m == 0 else \
+                      (self.functions['A']['value'](m - 1, 1) if m > 0 and n == 0 else \
+                      self.functions['A']['value'](m - 1, self.functions['A']['value'](m, n - 1))),
+                      'help': 'A(x, y): Ackermann function'},
+            'abs':    {'value': abs,
+                       'help': 'abs(x): absolute value of x'},
+            'acos':   {'value': math.acos,
+                       'help': 'acos(x): inverse trigonometric cosine of x (in radians)'},
+            'acosh':  {'value': math.acosh,
+                       'help': 'acosh(x): inverse hyperbolic cosine of x (in radians)'},
+            'asin':   {'value': math.asin,
+                       'help': 'asin(x): inverse trigonometric sine of x (in radians)'},
+            'asinh':  {'value': math.asinh,
+                       'help': 'asinh(x): inverse hyperbolic sine of x (in radians)'},
+            'atan':   {'value': math.atan,
+                       'help': 'atan(x): inverse trigonometric tangent of x (in radians)'},
+            'atanh':  {'value': math.atanh,
+                       'help': 'atanh(x): inverse hyperbolic tangent of x (in radians)'},
+            'base':   {'value': lambda x=None: self._set_base(x),
+                       'help': 'base(x): set output base to x (2, 8, 10 or 16 allowed)'},
+            'cbrt':   {'value': lambda x: x ** (1. / 3),
+                       'help': 'cbrt(x): cube root of x'},
+            'ceil':   {'value': math.ceil,
+                       'help': 'ceil(x): ceiling function of x'},
+            'cos':    {'value': math.cos,
+                       'help': 'cos(x): cosine of x (in radians)'},
+            'deg':    {'value': math.degrees,
                       'help': 'deg(x): convert x from radians to degrees'},
-            'erf':   {'value': math.erf,
-                      'help': 'erf(x): error function of x'},
-            'exp':   {'value': math.exp,
-                      'help': 'exp(x): calculate e ** x'},
-            'fact':  {'value': math.factorial,
-                      'help': 'fact(x): factorial of x'},
-            'fmod':  {'value': math.fmod,
-                      'help': 'fmod(x, y): calculate floating point modulo of x % y'},
-            'floor': {'value': math.floor,
-                      'help': 'floor(x): floor function of x'},
-            'gamma': {'value': math.gamma,
-                      'help': 'gamma(x): gamma function of x'},
-            'help':  {'value': lambda x: self._help(x),
-                      'help': 'help(x): print help on x'},
-            'hyp':   {'value': math.hypot,
-                      'help': 'hyp(x): hypotenuse of x'},
-            'ln':    {'value': lambda x: math.log(x, math.e),
-                      'help': 'ln(x): natural logarithm of x'},
-            'log':   {'value': math.log,
-                      'help': 'log(x[, base]): logarithm of x to base (default: 2)'},
-            'log2':  {'value': lambda x: math.log(x, 2),
-                      'help': 'log2(x): base 2 logarithm of x'},
-            'log10': {'value': math.log10,
-                      'help': 'log10(x): base 10 logarithm of x'},
-            'nrt':   {'value': lambda n, x: x ** (1. / n),
-                      'help': 'nrt(x): nth root of x'},
-            'rad':   {'value': math.radians,
-                      'help': 'rad(x): convert x from degrees to radians'},
-            'round': {'value': round,
-                      'help': 'round(x[, n]): round x to n decimal places (default: 0)'},
-            'sin':   {'value': math.sin,
-                      'help': 'sin(x): sine of x'},
-            'sqrt':  {'value': math.sqrt,
-                      'help': 'sqrt(x): square root of x'},
-            'tan':   {'value': math.tan,
-                      'help': 'tan(x): tangent of x'},
+            'delete': {'value': lambda x: self._delete_var(x),
+                      'help': 'delete(x): delete variable x',
+                      'meta': True},
+            'erf':    {'value': math.erf,
+                       'help': 'erf(x): error function of x'},
+            'exp':    {'value': math.exp,
+                       'help': 'exp(x): calculate e ** x'},
+            'fact':   {'value': math.factorial,
+                       'help': 'fact(x): factorial of x'},
+            'fmod':   {'value': math.fmod,
+                       'help': 'fmod(x, y): calculate floating point modulo of x % y'},
+            'floor':  {'value': math.floor,
+                       'help': 'floor(x): floor function of x'},
+            'gamma':  {'value': math.gamma,
+                       'help': 'gamma(x): gamma function of x'},
+            'help':   {'value': lambda x: self._help(x),
+                       'help': 'help(x): print help on x',
+                       'meta': True},
+            'hyp':    {'value': math.hypot,
+                       'help': 'hyp(x): hypotenuse of x'},
+            'ln':     {'value': lambda x: math.log(x, math.e),
+                       'help': 'ln(x): natural logarithm of x'},
+            'log':    {'value': math.log,
+                       'help': 'log(x[, base]): logarithm of x to base (default: 2)'},
+            'log2':   {'value': lambda x: math.log(x, 2),
+                       'help': 'log2(x): base 2 logarithm of x'},
+            'log10':  {'value': math.log10,
+                       'help': 'log10(x): base 10 logarithm of x'},
+            'pmov':   {'value': lambda x, a, b: a + x * (b - a),
+                       'help': 'pmov(x, a, b): proportional movement from a to b'},
+            'nrt':    {'value': lambda n, x: x ** (1. / n),
+                       'help': 'nrt(x): nth root of x'},
+            'rad':    {'value': math.radians,
+                       'help': 'rad(x): convert x from degrees to radians'},
+            'round':  {'value': round,
+                       'help': 'round(x[, n]): round x to n decimal places (default: 0)'},
+            'sin':    {'value': math.sin,
+                       'help': 'sin(x): sine of x'},
+            'sqrt':   {'value': math.sqrt,
+                       'help': 'sqrt(x): square root of x'},
+            'tan':    {'value': math.tan,
+                       'help': 'tan(x): tangent of x'},
+            'vars':   {'value': lambda _: self._print_vars(),
+                      'help': 'vars(): print user-assigned variables and their values',
+                      'meta': True},
         }
 
         self.completer = None
@@ -167,6 +176,20 @@ class Evaluator(object):
             if not msg:
                 raise ValueError('unknown help topic \'%s\'' % arg.id)
             print(msg)
+
+    def _print_vars(self):
+        ''' Print user-assigned variables. '''
+        for key, value in self.variables.items():
+            print('%s: %s' % (key, value))
+
+    def _delete_var(self, var):
+        ''' Delete user-assigned variable. '''
+        if len(var) != 1:
+            raise ValueError('unknown variable %s' % var)
+        var_id = var[0].id
+        is_existing_var = self.variables.get(var_id)
+        if is_existing_var is not None:
+            del self.variables[var_id]
 
     def _set_base(self, base):
         if base is None:
@@ -213,8 +236,9 @@ class Evaluator(object):
     def _eval_func(self, operator):
         ''' Evaluate function call (e.g. sqrt(16)). '''
         if operator.func.id in self.functions:
-            func = self.functions[operator.func.id]['value']
-            if operator.func.id == 'help':
+            func_wrapper = self.functions[operator.func.id]
+            func = func_wrapper['value']
+            if func_wrapper.get('meta') == True:
                 return func(operator.args)
             value = func(*(self._eval_op(arg) for arg in operator.args))
             return value
@@ -268,7 +292,7 @@ class Evaluator(object):
 
         return value
 
-    def _convert_out(self, result):
+    def _convert_result_base(self, result):
         ''' Convert output result to defined base. '''
         base = self.internal_variables['_base']
         if base == 2:
@@ -296,14 +320,18 @@ class Evaluator(object):
         if self.ans is not None and len(expr) and expr[0] in self.symbols:
             expr = 'ans' + expr
 
-        tree = ast.parse(expr, mode='eval')
-        result = self._eval_op(tree.body)
+        try:
+            tree = ast.parse(expr, mode='eval')
+        except SyntaxError:
+            raise SyntaxError('invalid syntax')
+        else:
+            result = self._eval_op(tree.body)
 
-        if result is not None:
-            self.ans = result
-            result = self._convert_out(result)
+            if result is not None:
+                self.ans = result
+                result = self._convert_result_base(result)
 
-        return result
+            return result
 
     def eval(self, expr, results=None):
         ''' Build and evaluate the AST for an expression, return the result(s). '''
