@@ -315,9 +315,18 @@ class Evaluator(object):
         else:
             raise ValueError('unsupported base value \'%s\'' % base)
 
+    def _is_repeatable_expr(self, expr):
+        if not len(expr):
+            return False
+        if (expr[0] == '+' or expr[0] == '-') and expr[1] != ' ':
+            return False
+        if expr[0] not in self.symbols:
+            return False
+        return self.ans is not None
+
     def _eval_expr(self, expr):
         ''' Evaluate a single expression. '''
-        if self.ans is not None and len(expr) and expr[0] in self.symbols:
+        if self._is_repeatable_expr(expr):
             expr = 'ans' + expr
 
         try:
